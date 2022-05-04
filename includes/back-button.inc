@@ -42,20 +42,12 @@
    		$lHTTPReferer = $Encoder->encodeForJavaScript($lHTTPReferer);
    	}// end if
 ?>
-
-<div style="margin: 5px;">
-	<span style="font-weight: bold; margin-right: 50px;">
-	<a id="back-button-anchor">
-		<img	src="./images/back-button-64-64.png"
-				alt="Go Back"
-				align="middle"
-		/>
-		&nbsp;
-		Back
-	</a>
-	</span>
-	<?php include_once('./includes/help-button.inc');?>
+<div class="col" id="back-button-anchor">
+    <a title="Back" class="text-body">
+        <i class="fas fa-arrow-left fa-1x"></i>
+    </a>
 </div>
+	<?php include_once('./includes/help-button.inc');?>
 <script nonce="<?php echo $CSPNonce; ?>">
     document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('back-button-anchor').addEventListener('click',

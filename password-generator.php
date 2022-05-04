@@ -41,68 +41,66 @@
 ?>
 
 <script>
-	function onSubmitOfGeneratorForm(/*HTMLFormElement*/ theForm){
-		try{
+function onSubmitOfGeneratorForm( /*HTMLFormElement*/ theForm) {
+    try {
 
-		    var lPasswordText = "";
-		    var lPasswordCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}\|;',./:?";
+        var lPasswordText = "";
+        var lPasswordCharset =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_-+=[]{}\|;',./:?";
 
-		    for( var i=0; i < 15; i++ ){
-		    	lPasswordText += lPasswordCharset.charAt(Math.floor(Math.random() * lPasswordCharset.length));
-		    }// end for i
-			
-			document.getElementById("idPasswordInput").innerHTML = "Password: <span style=\"color:red;border-width:1px;border-color:black;\">" + lPasswordText + "</span>";
-			document.getElementById("idPasswordTableRow").style.display = "";
-			return false;
+        for (var i = 0; i < 15; i++) {
+            lPasswordText += lPasswordCharset.charAt(Math.floor(Math.random() * lPasswordCharset.length));
+        } // end for i
 
-		}catch(e){
-			alert("Error: " + e.message);
-		}// end catch
-	}// end function onSubmitOfGeneratorForm(/*HTMLFormElement*/ theForm)
+        document.getElementById("idPasswordInput").innerHTML =
+            "Password: <span style=\"color:red;border-width:1px;border-color:black;\">" + lPasswordText + "</span>";
+        document.getElementById("idPasswordTableRow").style.display = "";
+        return false;
+
+    } catch (e) {
+        alert("Error: " + e.message);
+    } // end catch
+} // end function onSubmitOfGeneratorForm(/*HTMLFormElement*/ theForm)
 </script>
 
-<div class="page-title">Password Generator</div>
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h3>Password Generator</h3>
+        </div>
+    </div>
+    <div class="row row-cols-auto justify-content-end">
+        <?php include_once (__ROOT__.'/includes/back-button.inc');?>
+    </div>
+</div>
 
-<?php include_once (__ROOT__.'/includes/back-button.inc');?>
-<?php include_once (__ROOT__.'/includes/hints/hints-menu-wrapper.inc'); ?>
+<!-- <?php include_once (__ROOT__.'/includes/hints/hints-menu-wrapper.inc'); ?> -->
 
-<div id="id-generator-form-div">
-	<form 	enctype="application/x-www-form-urlencoded" 
-			id="idGeneratorForm">
-		<table>
-			<tr>
-				<td class="form-header">Password Generator</td>
-			</tr>
-			<tr><td></td></tr>
-			<tr>
-				<td class="label"  style="text-align: center;">
-					Making strong passwords is important.
-					<br/>
-					Click the button below to generate a password.
-				</td>
-			</tr>
-			<tr><td></td></tr>
-			<tr style="text-align: center;">
-				<td id="idUsernameInput" class="label"></td>
-			</tr>
-			<tr id="idPasswordTableRow" style="display: none;">
-				<td class="label" id="idPasswordInput"></td>
-			</tr>
-			<tr><td></td></tr>
-			<tr>
-				<td style="text-align:center;">
-					<input name="password-generator-php-submit-button" autofocus="autofocus" class="button" type="button" value="Generate Password" onclick="onSubmitOfGeneratorForm(this.form);" />
-				</td>
-			</tr>
-			<tr><td></td></tr>
-		</table>
-	</form>
+<div class="container" id="id-generator-form-div">
+    <form enctype="application/x-www-form-urlencoded" id="idGeneratorForm">
+        <div class="text-center">
+            <p>
+                Making strong passwords is important.
+                <br />
+                Click the button below to generate a password.
+            </p>
+            <br>
+            <span id="idUsernameInput" class="label"></span>
+            <div id="idPasswordTableRow" style="display: none;">
+                <span class="label" id="idPasswordInput"></span>
+            </div>
+            <div class="mt-5">
+                <input name="password-generator-php-submit-button" autofocus="autofocus" class="btn btn-primary"
+                    type="button" value="Generate Password" onclick="onSubmitOfGeneratorForm(this.form);" />
+            </div>
+        </div>
+    </form>
 </div>
 
 <script>
-	try{
-		document.getElementById("idUsernameInput").innerHTML = "<?php echo $lPasswordJSMessage; ?>";
-	}catch(e){
-		alert("Error: " + e.message);
-	}// end catch
+try {
+    document.getElementById("idUsernameInput").innerHTML = "<?php echo $lPasswordJSMessage; ?>";
+} catch (e) {
+    alert("Error: " + e.message);
+} // end catch
 </script>

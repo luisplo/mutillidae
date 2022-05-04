@@ -86,7 +86,11 @@
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous">
     </script>
 
-
+<script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+      crossorigin="anonymous"
+    ></script>
     <script src="styles/bootstrap-5.1.3-dist/js/bootstrap.min.js"></script>
     <script src="javascript/jQuery/jquery.js"></script>
     <script src="javascript/jQuery/colorbox/jquery.colorbox-min.js"></script>
@@ -107,6 +111,7 @@
     /* Set the fixed height of the footer here */
     background-color: #f5f5f5;
 }
+
 
 /* Custom page CSS
 -------------------------------------------------- */
@@ -216,10 +221,9 @@
                     <h4>Keep Calm and Pwn On</h4>
                 </div>
             </div>
-            <div class="row mb-5">
-				<div class="col-1"></div>
-                <div class="col-10">
-                    <ul class="nav ml-auto" class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="row mb-5 ">
+                <div class="col">
+                    <ul class="nav justify-content-center">
                         <li class="nav-item ">
                             <a class="nav-link text-body"
                                 href="index.php?page=home.php&popUpNotificationCode=HPH0">Home</a>
@@ -233,7 +237,7 @@
 							}// end if
 						?>
                         </li>
-                        <li class="nav-item ">
+                        <li class="nav-item">
                             <?php
 							if ($_SESSION['security-level'] == 0){
 								echo '<a class="nav-link text-body" href="index.php?do=toggle-hints&page='.$lPage.'">Toggle Hints</a>';
@@ -260,7 +264,6 @@
                         </li>
                     </ul>
                 </div>
-				<div class="col-1"></div>
             </div>
             <!-- <div class="line"></div> -->
             <table class="main-table-frame">
@@ -278,3 +281,4 @@
         });
     });
     </script>
+    

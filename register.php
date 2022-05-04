@@ -38,11 +38,6 @@
 	$lFormSubmitted = isset($_REQUEST["register-php-submit-button"]);
 ?>
 
-<div class="page-title">Register for an Account</div>
-
-<?php include_once (__ROOT__.'/includes/back-button.inc');?>
-<?php include_once (__ROOT__.'/includes/hints/hints-menu-wrapper.inc'); ?>
-
 <?php
 	if ($lFormSubmitted){
 		
@@ -102,7 +97,7 @@
 
 <script type="text/javascript">
 <!--
-	<?php 
+<?php 
 		if($lEnableJavaScriptValidation){
 			echo "var lValidateInput = \"TRUE\"" . PHP_EOL;
 		}else{
@@ -110,110 +105,131 @@
 		}// end if		
 	?>
 
-	function onSubmitOfForm(/*HTMLFormElement*/ theForm){
-		try{
-			if(lValidateInput == "TRUE"){
-				var lUnsafeCharacters = /[`~!@#$%^&*()-_=+\[\]{}\\|;':",./<>?]/;
-				if (theForm.username.value.length > 15 || 
-					theForm.password.value.length > 15){
-						alert('Username too long. We dont want to allow too many characters.\n\nSomeone might have enough room to enter a hack attempt.');
-						return false;
-				};// end if
-				
-				if (theForm.username.value.search(lUnsafeCharacters) > -1 || 
-					theForm.password.value.search(lUnsafeCharacters) > -1){
-						alert('Dangerous characters detected. We can\'t allow these. This all powerful blacklist will stop such attempts.\n\nMuch like padlocks, filtering cannot be defeated.\n\nBlacklisting is l33t like l33tspeak.');
-						return false;
-				};// end if
-			};// end if(lValidateInput)
-			
-			return true;
-		}catch(e){
-			alert("Error: " + e.message);
-		};// end catch
-	};// end function onSubmitOfLoginForm(/*HTMLFormElement*/ theForm)
-//-->
+function onSubmitOfForm( /*HTMLFormElement*/ theForm) {
+    try {
+        if (lValidateInput == "TRUE") {
+            var lUnsafeCharacters = /[`~!@#$%^&*()-_=+\[\]{}\\|;':",./<>?]/;
+            if (theForm.username.value.length > 15 ||
+                theForm.password.value.length > 15) {
+                alert(
+                    'Username too long. We dont want to allow too many characters.\n\nSomeone might have enough room to enter a hack attempt.'
+                );
+                return false;
+            }; // end if
+
+            if (theForm.username.value.search(lUnsafeCharacters) > -1 ||
+                theForm.password.value.search(lUnsafeCharacters) > -1) {
+                alert(
+                    'Dangerous characters detected. We can\'t allow these. This all powerful blacklist will stop such attempts.\n\nMuch like padlocks, filtering cannot be defeated.\n\nBlacklisting is l33t like l33tspeak.'
+                );
+                return false;
+            }; // end if
+        }; // end if(lValidateInput)
+
+        return true;
+    } catch (e) {
+        alert("Error: " + e.message);
+    }; // end catch
+}; // end function onSubmitOfLoginForm(/*HTMLFormElement*/ theForm)
+//
+-->
 </script>
 
-<span>
-	<a style="text-decoration: none; cursor: pointer;" href="./webservices/rest/ws-user-account.php">
-		<img style="vertical-align: middle;" src="./images/ajax_logo-75-79.jpg" height="75px" width="78px" />
-		<span style="font-weight:bold;">Switch to RESTful Web Service Version of this Page</span>
-	</a>
-</span>
+<div class="container">
+    <div class="row">
+        <div class="col text-center">
+            <h3>Register for an Account</h3>
+        </div>
+    </div>
+    <div class="row row-cols-auto justify-content-end">
+        <?php include_once (__ROOT__.'/includes/back-button.inc');?>
+    </div>
+</div>
 
-<div id="id-registration-form-div">
-	<form	action="index.php?page=register.php" method="post" enctype="application/x-www-form-urlencoded"
-			onsubmit="return onSubmitOfForm(this);"
-			>
-		<input name="csrf-token" type="hidden" value="<?php echo $lNewCSRFTokenForNextRequest; ?>" />
-		<table>
-			<tr><td>&nbsp;</td></tr>
-			<tr>
-				<td colspan="2" class="form-header">Please choose your username, password and signature</td>
-			</tr>
-			<tr><td>&nbsp;</td></tr>
-			<tr>
-				<td class="label">Username</td>
-				<td>
-					<input type="text" name="username" size="15" autofocus="autofocus"
-						<?php
+<div id="id-registration-form-div" class="my-4">
+    <form action="index.php?page=register.php" method="post" enctype="application/x-www-form-urlencoded"
+        onsubmit="return onSubmitOfForm(this);">
+        <input name="csrf-token" type="hidden" value="<?php echo $lNewCSRFTokenForNextRequest; ?>" />
+        <div class="container">
+            <div class="row justify-content-center" id="id-authentication-failed-td" style="display: none;">
+                <div class="col-6">
+                    <div class="alert alert-danger" role="alert">
+                        A simple danger alert—check it out!
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <span class="text-secondary">Please choose your username, password and signature</span>
+                </div>
+            </div>
+
+            <div class="row mt-3 justify-content-center">
+                <div class="col-4 text-center">
+                    <input class="form-control" placeholder="Username" type="text" name="username" size="15"
+                        autofocus="autofocus" <?php
 							if ($lEnableHTMLControls) {
 								echo('minlength="1" maxlength="15" required="required"');
 							}// end if
-						?>
-					/>
-				</td>
-			</tr>
-			<tr>
-				<td class="label">Password</td>
-				<td>
-					<input type="password" name="password" size="15" 
-						<?php
+						?> />
+
+                </div>
+            </div>
+            <div class="row mt-3 justify-content-center">
+                <div class="col-4 text-center">
+                    <input class="form-control" placeholder="Password" type="password" name="password" size="15" <?php
 							if ($lEnableHTMLControls) {
 								echo('minlength="1" maxlength="15" required="required"');
 							}// end if
-						?>
-					/>
-					&nbsp;
-					<a href="index.php?page=password-generator.php&username=<?php echo $logged_in_user ?>" target="_blank">Password Generator</a>
-				</td>
-			</tr>
-			<tr>
-				<td class="label">Confirm Password</td>
-				<td>
-					<input type="password" name="confirm_password" size="15"
-						<?php
+						?> />
+                </div>
+            </div>
+            <div class="row mt-3 justify-content-center">
+                <div class="col-4 text-center">
+                    <input class="form-control" placeholder="Confirm Password" type="password" name="confirm_password"
+                        size="15" <?php
 							if ($lEnableHTMLControls) {
 								echo('minlength="1" maxlength="15" required="required"');
 							}// end if
-						?>
-					/>
-				</td>
-			</tr>
-			<tr>
-				<td class="label">Signature</td>
-				<td>
-					<textarea rows="3" cols="50" name="my_signature"
-						<?php
+						?> />
+                </div>
+            </div>
+            <div class="row mt-3 justify-content-center">
+                <div class="col-4 text-center">
+                    <textarea placeholder="Signature" class="form-control" rows="3" cols="50" name="my_signature" <?php
 							if ($lEnableHTMLControls) {
 								echo('minlength="1" maxlength="100" required="required"');
 							}// end if
-						?>
-					></textarea>
-				</td>
-			</tr>			
-			<tr><td>&nbsp;</td></tr>
-			<tr>
-				<td colspan="2" style="text-align:center;">
-					<input name="register-php-submit-button" class="button" type="submit" value="Create Account" />
-				</td>
-			</tr>
-			<tr><td>&nbsp;</td></tr>
-		</table>
-	</form>
+						?>></textarea>
+                </div>
+            </div>
+            <div class="row mt-3 justify-content-center">
+                <div class="col-2 text-center d-grid gap-2">
+                    <input name="register-php-submit-button" class="btn btn-primary" type="submit"
+                        value="Create Account" />
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-center">
+                <div class="col text-center text-secondary">
+                    <a href="index.php?page=password-generator.php&username=<?php echo $logged_in_user ?>"
+                        target="_blank">Password
+                        Generator</a>
+                </div>
+            </div>
+            <div class="row mt-5 justify-content-center">
+                <div class="col text-center text-secondary">
+                    <span>
+                        <a style="text-decoration: none; cursor: pointer;"  href="./webservices/rest/ws-user-account.php">
+                            <img style="vertical-align: middle;" src="./images/ajax_logo-75-79.jpg" height="75px"
+                                width="78px" />
+                            <span style="font-weight:bold;">Switch to RESTful Web Service Version of this Page</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
-
 <?php
 	if ($lFormSubmitted) {
 		echo $lCSRFTokenHandler->generateCSRFHTMLReport();

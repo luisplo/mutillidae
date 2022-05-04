@@ -1,4 +1,3 @@
-
 <?php
 	/* Known Vulnerabilities
 	 * Cross Site Scripting, Cross Site Scripting via HTTP Headers, 
@@ -57,75 +56,93 @@
 ?>
 
 <script>
-	var DeleteCapturedData = function(){
-		if (window.confirm("Please confirm all captured data should be deleted")){
-			document.location="index.php?page=captured-data.php&deleteLogs=deleteLogs";
-		};
-	};
+var DeleteCapturedData = function() {
+    if (window.confirm("Please confirm all captured data should be deleted")) {
+        document.location = "index.php?page=captured-data.php&deleteLogs=deleteLogs";
+    };
+};
 </script>
 
-<div class="page-title">Captured Data</div>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col text-center">
+            <h3>Captured Data</h3>
+        </div>
+    </div>
+    <div class="row row-cols-auto justify-content-end">
+        <?php include_once (__ROOT__.'/includes/back-button.inc');?>
+    </div>
+</div>
 
-<?php include_once (__ROOT__.'/includes/back-button.inc');?>
-<?php include_once (__ROOT__.'/includes/hints/hints-menu-wrapper.inc'); ?>
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-8">
+            <p>
+                This page shows the data captured by page <a
+                    href="index.php?page=capture-data.php">capture-data.php</a>.
+                There should also be a file with the same data since capture-data.php tries to save the data to a table
+                and a file. The table contents are being displayed on this page. On this system, the
+                file should be found in <?php print pathinfo($_SERVER["SCRIPT_FILENAME"], PATHINFO_DIRNAME); ?>.
+                The database table is named captured_data.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- <?php include_once (__ROOT__.'/includes/hints/hints-menu-wrapper.inc'); ?> -->
 
 <!-- BEGIN HTML OUTPUT  -->
-<table style="margin-left:auto; margin-right:auto; width: 600px;">
-	<tr>
-		<td class="form-header">Captured Data Page</td>
-	</tr>
-	<tr><td>&nbsp;</td></tr>
-	<tr>
-		<td>
-			This page shows the data captured by page <a href="index.php?page=capture-data.php">capture-data.php</a>.
-			There should also be a file with the same data since capture-data.php tries to save the data to a table
-			and a file. The table contents are being displayed on this page. On this system, the 
-			file should be found in <?php print pathinfo($_SERVER["SCRIPT_FILENAME"], PATHINFO_DIRNAME); ?>.
-			The database table is named captured_data.
-		</td>
-	</tr>
-</table>
-<span title="Click to refresh captured data log" onclick="document.location.reload(true);" style="cursor: pointer;margin-right:35px;font-weight: bold;">
-	<img width="32px" height="32px" src="./images/refresh-button-48px-by-48px.png" style="vertical-align:middle;" />
-	Refresh
-</span>
-<span 	title="Click to delete captured data log. This deletes the database table only. The text file is not affected." 
-		onclick="DeleteCapturedData();" 
-		style="margin-right:35px;cursor: pointer;font-weight: bold;">
-	<img width="32px" height="32px" src="./images/delete-icon-48-48.png" style="vertical-align:middle;" />
-	Delete Capured Data
-</span>
-<span title="Click to visit capture data page. Your data will be captured." onclick="document.location='./index.php?page=capture-data.php';" style="cursor: pointer;font-weight: bold;">
-	<img width="32px" height="32px" src="./images/spider-in-web-48-48.png" style="vertical-align:middle;" />
-	Capture Data
-</span>
-<br/>
 
 <?php
-	try{// to draw table
+	try{
 		$lQueryResult = $SQLQueryHandler->getCapturedData();
-
-		// we have rows. Begin drawing output.
-		echo '<table border="1px;" width="100%" class="results-table">';
-		echo '<tr class="report-header"><td colspan="7">'.$lQueryResult->num_rows.' captured records found</td></tr>';
-	    echo '<tr class="report-header">
-			    <td>Hostname</td>
-			    <td>Client IP Address</td>
-			    <td>Client Port</td>
-    			<td>User Agent</td>
-    			<td>Referrer</td>			    
-			    <td>Data</td>
-			    <td>Date/Time</td>
-		    </tr>';
-
-	    if ($lLimitOutput){
-	    	echo '<tr><td class="error-header" colspan="10">Note: DOS defenses enabled. Rows limited to last 20.</td></tr>';
-	    }// end if
-
-	    $lRowNumber = 0;
-	    while($row = $lQueryResult->fetch_object()){
-	    	$lRowNumber++;
-			
+?>
+<table class="table table-hover table-striped">
+    <thead class="table-light">
+        <tr class="text-end">
+            <td colspan="10">
+                <span>
+                    <i class="fas fa-calculator mx-2"></i>
+                    <?php echo $lQueryResult->num_rows ?> captured records found
+                </span>
+                <span title="Click to visit capture data page. Your data will be captured."
+                    onclick="document.location='./index.php?page=capture-data.php';"
+                    style="cursor: pointer;margin-left:35px;margin-right:35px;white-space:nowrap;font-weight:bold;">
+                    <i class="fas fa-file-medical-alt mx-2"></i>
+                    Capture Data
+                </span>
+                <span title="Click to refresh captured data log" onclick="document.location.reload(true);"
+                    style="cursor: pointer;margin-left:35px;margin-right:35px;white-space:nowrap;font-weight:bold;">
+                    <i class="fas fa-redo mx-2"></i>
+                    Refresh
+                </span>
+                <span
+                    title="Click to delete captured data log. This deletes the database table only. The text file is not affected."
+                    onclick="DeleteCapturedData();" style="cursor: pointer;white-space:nowrap;font-weight:bold;">
+                    <i class="fas fa-trash mx-2"></i>
+                    Delete Capured Data
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight:bold;">Hostname</td>
+            <td style="font-weight:bold;">Client IP Address</td>
+            <td style="font-weight:bold;">Client Port</td>
+            <td style="font-weight:bold;">User Agent</td>
+            <td style="font-weight:bold;">Referrer</td>
+            <td style="font-weight:bold;">Data</td>
+            <td style="font-weight:bold;">Date/Time</td>
+        </tr>
+        <?php
+			if ($lLimitOutput){
+				echo '<tr><td class="table-danger text-center" colspan="10">Note: DOS defenses enabled. Rows limited to last 20.</td></tr>';
+			}// end if
+		?>
+    </thead>
+    <?php
+	  $lRowNumber = 0;
+	  while($row = $lQueryResult->fetch_object()){
+			$lRowNumber++;
 			if(!$lEncodeOutput){
 				$lHostname = $row->hostname;
 				$lClientIPAddress = $row->ip_address;
@@ -143,19 +160,20 @@
 				$lData = $Encoder->encodeForHTML($row->data);
 				$lCaptureDate = $Encoder->encodeForHTML($row->capture_date);				
 			}// end if
-							
-			echo "<tr>
-					<td>{$lHostname}</td>
-					<td>{$lClientIPAddress}</td>
-					<td>{$lClientPort}</td>
-					<td>{$lClientUserAgentString}</td>
-					<td>{$lClientReferrer}</td>
-					<td>{$lData}</td>
-					<td>{$lCaptureDate}</td>
-				</tr>\n";
+				echo "<tr>
+						<td>{$lHostname}</td>
+						<td>{$lClientIPAddress}</td>
+						<td>{$lClientPort}</td>
+						<td>{$lClientUserAgentString}</td>
+						<td>{$lClientReferrer}</td>
+						<td>{$lData}</td>
+						<td>{$lCaptureDate}</td>
+					</tr>\n";
 		}//end while $row
 		echo "</table>";
 	} catch (Exception $e) {
 		echo $CustomErrorHandler->FormatError($e, "Error writing rows.");
 	}// end try;
-?>
+	?>
+
+</table>

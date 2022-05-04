@@ -42,54 +42,55 @@
 	$lQueryResult = $SQLQueryHandler->getHitLogEntries();
 ?>
 
-<div class="page-title">Log</div>
+<div class="container mb-5">
+    <div class="row">
+        <div class="col text-center">
+            <h3>Log</h3>
+        </div>
+    </div>
+    <div class="row row-cols-auto justify-content-end">
+        <?php include_once (__ROOT__.'/includes/back-button.inc');?>
+    </div>
+</div>
 
-<?php include_once (__ROOT__.'/includes/back-button.inc');?>
-<?php include_once (__ROOT__.'/includes/hints/hints-menu-wrapper.inc'); ?>
 
-<style>
-	#idLogRecords tr td{
-		border: 1px solid black;
-	}
-	#idLogRecords{
-		width: 100%;
-	}
-	img{
-		vertical-align:middle;
-	}
-</style>
-<table class="results-table" id="idLogRecords">
-<tr class="report-header">
-	<td colspan="10">	
-		<span>
-			<img width="32px" height="32px" src="./images/information-icon-64-64.png" />
-			<?php echo $lQueryResult->num_rows; ?> log records found
-		</span>
-		<span title="Click to refresh log file" onclick="document.location.href=document.location.href.replace('&deleteLogs=deleteLogs','').replace('&popUpNotificationCode=LFD1','').concat('&popUpNotificationCode=LFR1');" style="cursor: pointer;margin-left:35px;margin-right:35px;white-space:nowrap;font-weight:bold;">
-			<img width="32px" height="32px" src="./images/refresh-button-48px-by-48px.png" />
-			Refresh Logs
-		</span>
-		<span title="Click to delete log file" onclick="document.location='./index.php?page=show-log.php&deleteLogs=deleteLogs&popUpNotificationCode=LFD1';" style="cursor: pointer;white-space:nowrap;font-weight:bold;">
-			<img width="32px" height="32px" src="./images/delete-icon-48-48.png" />
-			Delete Logs
-		</span>
-	</td>
-</tr>		
-<tr class="report-header">
-    <td style="font-weight:bold;">Hostname</td>
-    <td style="font-weight:bold;">IP</td>
-    <td style="font-weight:bold;">Browser Agent</td>
-    <td style="font-weight:bold;">Message</td>
-    <td style="font-weight:bold;">Date/Time</td>
-</tr>
+<!-- <?php include_once (__ROOT__.'/includes/hints/hints-menu-wrapper.inc'); ?> -->
 
-<?php
+<table class="table table-hover table-striped">
+    <thead class="table-light">
+        <tr class="text-end">
+            <td colspan="10">
+                <span>
+                    <i class="fas fa-calculator mx-2"></i>
+                    <?php echo $lQueryResult->num_rows; ?> log records found
+                </span>
+                <span title="Click to refresh log file"
+                    onclick="document.location.href=document.location.href.replace('&deleteLogs=deleteLogs','').replace('&popUpNotificationCode=LFD1','').concat('&popUpNotificationCode=LFR1');"
+                    style="cursor: pointer;margin-left:35px;margin-right:35px;white-space:nowrap;font-weight:bold;">
+                    <i class="fas fa-redo mx-2"></i>
+                    Refresh Logs
+                </span>
+                <span title="Click to delete log file"
+                    onclick="document.location='./index.php?page=show-log.php&deleteLogs=deleteLogs&popUpNotificationCode=LFD1';"
+                    style="cursor: pointer;white-space:nowrap;font-weight:bold;">
+                    <i class="fas fa-trash mx-2"></i>
+                    Delete Logs
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td style="font-weight:bold;">Hostname</td>
+            <td style="font-weight:bold;">IP</td>
+            <td style="font-weight:bold;">Browser Agent</td>
+            <td style="font-weight:bold;">Message</td>
+            <td style="font-weight:bold;">Date/Time</td>
+        </tr>
+    </thead>
+    <?php
 	try{// to draw table		
-
 	    if ($lLimitOutput){
 	    	echo '<tr><td class="error-header" colspan="10">Note: DOS defenses enabled. Rows limited to last 20.</td></tr>';
 	    }// end if
-
 	    if($lQueryResult->num_rows > 0){
 		    $lRowNumber = 0;
 		    while($row = $lQueryResult->fetch_object()){
@@ -108,8 +109,7 @@
 					$lReferer = $Encoder->encodeForHTML($row->referer);
 					$lDate = $Encoder->encodeForHTML($row->date);				
 				}// end if
-				
-				echo "<tr>
+				echo "<tr class='table-light'>
 						<td>{$lHostname}</td>
 						<td>{$lClientIPAddress}</td>
 						<td>{$lBrowser}</td>
@@ -118,7 +118,7 @@
 					</tr>\n";
 			}//end while $row
 	    }else{
-	    	echo '<tr><td class="warning-message" colspan="10">No Records Found</td></tr>';
+	    	echo '<tr><td class="text-center my-5" colspan="10">No Records Found</td></tr>';
 		}//end if
 					
 	} catch (Exception $e) {
