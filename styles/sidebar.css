@@ -61,16 +61,16 @@ span {
 }
 
 #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: 450px;
+    max-width: 450px;
     background: #7386D5;
     color: #fff;
     transition: all 0.3s;
 }
 
 #sidebar.active {
-    min-width: 80px;
-    max-width: 80px;
+    min-width: 150px;
+    max-width: 150px;
     text-align: center;
 }
 
@@ -104,14 +104,14 @@ span {
     padding: 10px !important;
 }
 
-#sidebar.active .dropdown-toggle::after {
+/* #sidebar.active .dropdown-toggle::after {
     top: auto;
     bottom: 10px;
     right: 50%;
     -webkit-transform: translateX(50%);
     -ms-transform: translateX(50%);
     transform: translateX(50%);
-}
+} */
 
 #sidebar .sidebar-header {
     padding: 20px;
